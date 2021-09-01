@@ -1,0 +1,23 @@
+name: Golee Build Action Workflow
+description: In order not to subscribe to the enterprise version of GitHub we publish our template actions here ;)
+inputs:
+  name:
+    description: "App name"
+    required: true
+  branch:
+    description: "Current branch"
+    required: true
+  commit_hash:
+    description: "Current commit hash"
+    required: true
+outputs:
+  image_path:
+    description: "Docker image path"
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.name }}
+    - ${{ inputs.branch }}
+    - ${{ inputs.commit_hash }}
