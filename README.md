@@ -6,12 +6,11 @@ Usage
 
 ```
 - name: Build
-        uses: GoleeTeam/golee-build-action-workflow@v0.36-test
+        uses: GoleeTeam/golee-build-action-workflow@v2
         with:
           name: ${{ github.repository }}
           branch: ${{ github.ref }}
           commit_hash: ${{ github.sha }}
         env:
           GCLOUD_SERVICE_ACCOUNT_KEYFILE: ${{ secrets.GCP_GCR_BUILD_SERVICE_ACCOINT_KEY }}
-          GCLOUD_PROJECT: "golee-infra"
 ```

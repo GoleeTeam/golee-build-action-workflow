@@ -7,6 +7,8 @@ commit_hash=$3
 app_name=${app_name##*/}
 branch_name=${branch_name##*/}
 
+GCLOUD_PROJECT="${GCLOUD_PROJECT:-"golee-infra"}"
+
 apt-get update
 apt-get install -y \
     apt-transport-https \
