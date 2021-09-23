@@ -15,12 +15,14 @@ gcloud config set project $GCLOUD_PROJECT
 
 VERSION_CODE="$branch_name-$commit_hash"
 SERVICE_NAME="$app_name"
-REMOTE_IMAGE_PATH="eu.gcr.io/$GCLOUD_PROJECT/$SERVICE_NAME:$VERSION_CODE"
+REMOTE_IMAGE_PATH="eu.gcr.io/$GCLOUD_PROJECT/$SERVICE_NAME"
+REMOTE_IMAGE_PATH_WITH_TAG="$REMOTE_IMAGE_PATH:$VERSION_CODE"
 
 gcloud auth configure-docker
 
 docker build -t goleedev/$SERVICE_NAME:$VERSION_CODE .
-docker tag goleedev/$SERVICE_NAME:$VERSION_CODE $REMOTE_IMAGE_PATH
-docker push $REMOTE_IMAGE_PATH
+docker tag goleedev/$SERVICE_NAME:$VERSION_CODE $REMOTE_IMAGE_PATH_WITH_TAG
+docker tag $REMOTE_IMAGE_PATH_WITH_TAG "${REMOTE_IMAGE_PATH}:latest-${branch_name}"
+docker image push --all-tags $REMOTE_IMAGE_PATH
 
-echo "::set-output name=image_path::$REMOTE_IMAGE_PATH"
+echo "::set-output name=image_path::$REMOTE_IMAGE_PATH_WITH_TAG"
