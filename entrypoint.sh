@@ -9,6 +9,8 @@ branch_name=${branch_name##*/}
 
 GCLOUD_PROJECT="${GCLOUD_PROJECT:-"golee-infra"}"
 
+set -e
+
 
 docker -v
 gcloud -v
