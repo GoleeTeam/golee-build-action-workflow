@@ -2,7 +2,7 @@
 Base Docker image used by golee-build-action-workflow
 
 
-Based on ubuntu:latest. Docker and GCloud CLI intalled.
+Based on ubuntu:latest. Docker and GCloud CLI installed.
 
 ---
 
