@@ -26,7 +26,7 @@ REMOTE_IMAGE_PATH_WITH_TAG="$REMOTE_IMAGE_PATH:$VERSION_CODE"
 
 gcloud auth configure-docker
 
-docker build -t goleedev/$SERVICE_NAME:$VERSION_CODE .
+DOCKER_BUILDKIT=1 docker build -t goleedev/$SERVICE_NAME:$VERSION_CODE .
 docker tag goleedev/$SERVICE_NAME:$VERSION_CODE $REMOTE_IMAGE_PATH_WITH_TAG
 docker tag $REMOTE_IMAGE_PATH_WITH_TAG "${REMOTE_IMAGE_PATH}:latest-${branch_name}"
 docker image push --all-tags $REMOTE_IMAGE_PATH
