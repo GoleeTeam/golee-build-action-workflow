@@ -31,4 +31,4 @@ docker tag goleedev/$SERVICE_NAME:$VERSION_CODE $REMOTE_IMAGE_PATH_WITH_TAG
 docker tag $REMOTE_IMAGE_PATH_WITH_TAG "${REMOTE_IMAGE_PATH}:latest-${branch_name}"
 docker image push --all-tags $REMOTE_IMAGE_PATH
 
-echo "::set-output name=image_path::$REMOTE_IMAGE_PATH_WITH_TAG"
+echo "image_path=$REMOTE_IMAGE_PATH_WITH_TAG" >> $GITHUB_OUTPUT
