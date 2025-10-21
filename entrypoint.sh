@@ -11,7 +11,6 @@ GCLOUD_PROJECT="${GCLOUD_PROJECT:-"golee-infra"}"
 
 set -e
 
-
 docker -v
 gcloud -v
 
@@ -26,7 +25,13 @@ REMOTE_IMAGE_PATH_WITH_TAG="$REMOTE_IMAGE_PATH:$VERSION_CODE"
 
 gcloud auth configure-docker
 
-DOCKER_BUILDKIT=1 docker build -t goleedev/$SERVICE_NAME:$VERSION_CODE .
+[[ -z "$NPM_TOKEN" ]] && echo "WARNING: missing NPM_TOKEN!"
+
+DOCKER_BUILDKIT=1 docker build \
+    -t goleedev/$SERVICE_NAME:$VERSION_CODE \
+    --build-arg NPM_TOKEN=$NPM_TOKEN \
+    .
+
 docker tag goleedev/$SERVICE_NAME:$VERSION_CODE $REMOTE_IMAGE_PATH_WITH_TAG
 docker tag $REMOTE_IMAGE_PATH_WITH_TAG "${REMOTE_IMAGE_PATH}:latest-${branch_name}"
 docker image push --all-tags $REMOTE_IMAGE_PATH
