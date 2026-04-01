@@ -18,6 +18,9 @@ echo -n $GCLOUD_SERVICE_ACCOUNT_KEYFILE > ./gcloud-api-key.json
 gcloud auth activate-service-account --key-file gcloud-api-key.json
 gcloud config set project $GCLOUD_PROJECT   
 
+REVISION="${GITHUB_RUN_NUMBER}-$( echo "$commit_hash" | cut -c1-7 )"
+echo "Current revision: $REVISION"
+
 VERSION_CODE="$branch_name-$commit_hash"
 SERVICE_NAME="$app_name"
 REMOTE_IMAGE_PATH="eu.gcr.io/$GCLOUD_PROJECT/$SERVICE_NAME"
@@ -29,7 +32,8 @@ gcloud auth configure-docker
 
 DOCKER_BUILDKIT=1 docker build \
     -t goleedev/$SERVICE_NAME:$VERSION_CODE \
-    --build-arg NPM_TOKEN=$NPM_TOKEN \
+    --build-arg NPM_TOKEN="$NPM_TOKEN" \
+    --build-arg REVISION="$REVISION" \
     .
 
 docker tag goleedev/$SERVICE_NAME:$VERSION_CODE $REMOTE_IMAGE_PATH_WITH_TAG
