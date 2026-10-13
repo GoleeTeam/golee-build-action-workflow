@@ -7,7 +7,7 @@ commit_hash=$3
 app_name=${app_name##*/}
 branch_name=${branch_name##*/}
 
-GCLOUD_PROJECT="${GCLOUD_PROJECT:-"golee-infra"}"
+GCLOUD_PROJECT="golee-infra"
 
 set -e
 
