@@ -2,7 +2,7 @@
 
 app_name=$1
 branch_name=$2
-commit_hash=$3 
+commit_hash=$3
 
 app_name=${app_name##*/}
 branch_name=${branch_name##*/}
@@ -14,11 +14,11 @@ set -e
 docker -v
 gcloud -v
 
-echo -n $GCLOUD_SERVICE_ACCOUNT_KEYFILE > ./gcloud-api-key.json
+echo -n $GCLOUD_SERVICE_ACCOUNT_KEYFILE >./gcloud-api-key.json
 gcloud auth activate-service-account --key-file gcloud-api-key.json
-gcloud config set project $GCLOUD_PROJECT   
+gcloud config set project $GCLOUD_PROJECT
 
-REVISION="${GITHUB_RUN_NUMBER}-$( echo "$commit_hash" | cut -c1-7 )"
+REVISION="${GITHUB_RUN_NUMBER}-$(echo "$commit_hash" | cut -c1-7)"
 echo "Current revision: $REVISION"
 
 VERSION_CODE="$branch_name-$commit_hash"
@@ -40,4 +40,4 @@ docker tag goleedev/$SERVICE_NAME:$VERSION_CODE $REMOTE_IMAGE_PATH_WITH_TAG
 docker tag $REMOTE_IMAGE_PATH_WITH_TAG "${REMOTE_IMAGE_PATH}:latest-${branch_name}"
 docker image push --all-tags $REMOTE_IMAGE_PATH
 
-echo "image_path=$REMOTE_IMAGE_PATH_WITH_TAG" >> $GITHUB_OUTPUT
+echo "image_path=$REMOTE_IMAGE_PATH_WITH_TAG" >>$GITHUB_OUTPUT
