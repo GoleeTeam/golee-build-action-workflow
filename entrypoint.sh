@@ -28,7 +28,7 @@ REMOTE_IMAGE_PATH_WITH_TAG="$REMOTE_IMAGE_PATH:$VERSION_CODE"
 
 gcloud auth configure-docker
 
-[[ -z "$NPM_TOKEN" ]] && echo "WARNING: missing NPM_TOKEN!"
+[ -z "$NPM_TOKEN" ] && echo "WARNING: missing NPM_TOKEN!"
 
 DOCKER_BUILDKIT=1 docker build \
     -t goleedev/$SERVICE_NAME:$VERSION_CODE \
